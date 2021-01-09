@@ -1,0 +1,179 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Note Saving App
+  description: This is the RESTfull API specification.
+
+paths:
+  /notes/{userId}:
+    get:
+      description: Get notes
+      parameters:
+        - in: query
+          name: isArchieved
+          description: To get archieved and unarchieved notes seperately
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: userId
+          description: archieved and unarchieved notes to return seperately
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful response(Success).
+          content:
+            application/json:
+              schema:
+                type: string
+
+        "404":
+          description: Page not found(Not Found).
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  reason:
+                    type: string
+        "500":
+          description: Server error(Internal Server Error).
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  reason:
+                    type: string
+    post:
+      description: Create a note.
+      parameters:
+        - in: path
+          name: userId
+          description: success message to return
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Add notes to database
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+      responses:
+        "201":
+          description: Successfull Created(Created).
+          content:
+            application/json:
+              schema:
+                type: string
+        "500":
+          description: Server error(Internal Server Error).
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  reason:
+                    type: string
+  /notes/{note-id}:
+    put:
+      description: edit a single note
+      parameters:
+        - in: path
+          name: note-id
+          description: success message to return
+          required: true
+          schema:
+            type: string
+      requestBody:
+          description: update a notes
+          required: true
+          content:
+            application/json:
+              schema:
+                type: string
+      responses:
+        "200":
+          description: Successful response(Success).
+          content:
+            application/json:
+              schema:
+              type: string
+        "500":
+          description: Server error(Internal Server Error).
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  reason:
+                    type: string
+    patch:
+      description: archieve and unarchive a note
+      parameters:
+        - name: note-id
+          in: path
+          description: 
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: update archieve state of a note
+        required: true
+        content:
+          application/json:
+            schema:
+              type: string
+      responses:
+        "200":
+          description: Successful response (Success).
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  reason:
+                    type: string
+        "500":
+          description: Server error(Internal Server Error).
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  reason:
+                    type: string
+    delete:
+      description: Delete a note
+      parameters:
+        - name: note-id
+          in: path
+          description: success note to return
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successfully deleted(Success response).
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  reason:
+                    type: string
+        "500":
+          description: Server error(Internal Server Error).
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  reason:
+                    type: string
+
+      
